@@ -5,7 +5,7 @@ from src.utils.math_conversions import *
 class UIManager:
     def __init__(self, screen_size, state):
         self.state = state
-        self.manager = pygame_gui.UIManager(screen_size)
+        self.manager = pygame_gui.UIManager(screen_size, theme_path="theme.json")
 
         # slider positions
         y_start = 520
@@ -19,6 +19,7 @@ class UIManager:
             pygame.Rect((x, y_start), (width, height)),
             start_value = m_to_nm(state.wavelength_m),
             value_range = (380.0, 780.0),
+            object_id = "#slider",
             manager = self.manager,
         )
 
@@ -33,6 +34,7 @@ class UIManager:
             pygame.Rect((x, y_start + spacing), (width, height)),
             start_value = m_to_um(state.slit_distance_m),
             value_range = (10.0, 200.0),
+            object_id = "#slider",
             manager = self.manager
         )
 
@@ -47,6 +49,7 @@ class UIManager:
             pygame.Rect((x, y_start + 2 * spacing), (width, height)),
             start_value = m_to_um(state.slit_width_m),
             value_range = (1.0, 50.0),
+            object_id = "#slider",
             manager = self.manager
         )
 
@@ -61,6 +64,7 @@ class UIManager:
             pygame.Rect((x, y_start + 3 * spacing), (width, height)),
             start_value = state.screen_distance_m,
             value_range = (0.5, 5.0),
+            object_id = "#slider",
             manager = self.manager
         )
 
@@ -75,6 +79,7 @@ class UIManager:
             pygame.Rect((x, y_start + 4 * spacing), (width, height)),
             start_value = state.screen_range_m * 200.0,
             value_range = (1.0, 100.0),
+            object_id = "#slider",
             manager = self.manager
         )
 

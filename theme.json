@@ -1,0 +1,10 @@
+{
+  "#slider": {
+    "misc": {
+      "shape": "rounded_rectangle",
+      "enable_arrow_buttons": "0",
+      "sliding_button_width": "20",
+      "shadow_width": "0"
+    }
+  }
+}
