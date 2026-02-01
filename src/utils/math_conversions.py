@@ -36,3 +36,32 @@ def cm_to_m(value_cm: float) -> float:
 def m_to_cm(value_m: float) -> float:
     """Meters to centimeters"""
     return value_m * 1e2
+
+
+# =========================
+# Screen conversions
+# =========================
+
+def pixel_to_meter(
+    pixel: int,
+    screen_width_px: int,
+    screen_range_m: float
+) -> float:
+    """
+    Convert pixel position to physical position on screen (meters)
+
+    Screen center (screen_width_px / 2)
+    """
+    num = (pixel / screen_width_px) - 0.5
+    return num * 2.0 * screen_range_m
+
+def meter_to_pixel(
+    x_m: float,
+    screen_width_px: int,
+    screen_range_m: float
+) -> float:
+    """
+    Convert physical position (meters) to pixel position
+    """
+    num = (x_m / (2.0 * screen_range_m)) + 0.5
+    return int(num * screen_width_px)
