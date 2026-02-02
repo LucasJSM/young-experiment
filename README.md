@@ -31,8 +31,7 @@ Uma simulação física interativa e visualmente precisa do **Experimento da Fen
 
 1.  **Clone o repositório:**
     ```bash
-    git clone [https://github.com/LucasJSM/young-experiment](https://github.com/LucasJSM/young-experiment)
-    cd young-experiment
+    git clone https://github.com/LucasJSM/young-experiment.git
     ```
 
 2.  **Crie e ative um ambiente virtual (Recomendado):**
@@ -62,7 +61,7 @@ Uma simulação física interativa e visualmente precisa do **Experimento da Fen
 * **[Python 3](https://www.python.org/):** Linguagem base.
 * **[Pygame CE](https://pyga.me/):** Motor gráfico para renderização da janela e primitivas visuais.
 * **[NumPy](https://numpy.org/):** Cálculos vetoriais de alta performance para processar a intensidade de luz em milhares de pixels simultaneamente.
-* **[Pygame GUI](https://pygame-gui.readthedocs.io/):** Gerenciamento de interface (sliders e caixas de texto).
+* **[Pygame GUI](https://pygame-gui.readthedocs.io/):** Gerenciamento de interface (sliders).
 
 ## 📂 Estrutura do Projeto
 
