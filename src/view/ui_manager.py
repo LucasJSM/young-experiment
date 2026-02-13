@@ -7,142 +7,145 @@ class UIManager:
         self.state = state
         self.manager = pygame_gui.UIManager(screen_size, theme_path="theme.json")
 
-        # slider positions
+        # dictionary to hold references to UI components
+        self.components = {}
+
+        x_start = 50
         y_start = 520
         spacing = 50
         width = 320
+        input_width = 80
         height = 25
-        x = 50
 
-        # wavelength slider
-        self.wavelength_slider = pygame_gui.elements.UIHorizontalSlider(
-            pygame.Rect((x, y_start), (width, height)),
+        self.build_components(
+            name = "wavelength",
+            label_text = "Comprimento de Onda λ (nm)",
+            x = x_start,
+            y = y_start,
+            slider_range = (380.0, 780.0),
             start_value = m_to_nm(state.wavelength_m),
-            value_range = (380.0, 780.0),
+            to_state = nm_to_m,
+            from_state = m_to_nm,
+        )
+
+        self.build_components(
+            name = "slit_distance",
+            label_text = "Distância entre fendas (μm)",
+            x = x_start,
+            y = y_start + spacing,
+            slider_range = (10.0, 200.0),
+            start_value = m_to_um(state.slit_distance_m),
+            to_state = um_to_m,
+            from_state = m_to_um,
+        )
+
+        self.build_components(
+            name = "slit_width",
+            label_text = "Largura da fenda (μm)",
+            x = x_start,
+            y = y_start + 2 * spacing,
+            slider_range = (1.0, 50.0),
+            start_value = m_to_um(state.slit_width_m),
+            to_state = um_to_m,
+            from_state = m_to_um,
+        )
+
+        self.build_components(
+            name = "screen_distance",
+            label_text = "Distância da tela (m)",
+            x = x_start,
+            y = y_start + 3 * spacing,
+            slider_range = (0.5, 5.0),
+            start_value = state.screen_distance_m,
+            to_state = lambda x: x,
+            from_state = lambda x: x,
+        )
+
+        self.build_components(
+            name = "screen_range",
+            label_text = "Campo de visão (cm)",
+            x = x_start,
+            y = y_start + 4 * spacing,
+            slider_range = (2.0, 20.0),
+            start_value = m_to_cm(state.screen_range_m),
+            to_state = cm_to_m,
+            from_state = m_to_cm,
+        )
+
+
+    def build_components(self, name, label_text, x, y, slider_range, start_value, to_state, from_state):
+        slider_width = 250
+        label_width = 320
+
+        label_x = x - (label_width - slider_width) // 2
+
+        label = pygame_gui.elements.UILabel(
+            relative_rect = pygame.Rect((label_x, y - 20), (label_width, 20)),
+            text = label_text,
+            manager = self.manager,
+        )
+        
+        slider = pygame_gui.elements.UIHorizontalSlider(
+            relative_rect = pygame.Rect((x, y), (250, 25)),
+            start_value = start_value,
+            value_range = slider_range,
+            manager = self.manager,
             object_id = "#slider",
+        )
+
+        input_field = pygame_gui.elements.UITextEntryLine(
+            relative_rect = pygame.Rect((x + 270, y), (80, 25)),
             manager = self.manager,
         )
 
-        self.wavelength_label = pygame_gui.elements.UILabel(
-            pygame.Rect((x, y_start - 22), (width, 20)),
-            "Comprimento de Onda λ (nm)",
-            manager = self.manager
-        )
+        input_field.set_text(f"{start_value:.2f}")
 
-        # slit distance slider
-        self.slit_distance_slider = pygame_gui.elements.UIHorizontalSlider(
-            pygame.Rect((x, y_start + spacing), (width, height)),
-            start_value = m_to_um(state.slit_distance_m),
-            value_range = (10.0, 200.0),
-            object_id = "#slider",
-            manager = self.manager
-        )
-
-        self.slit_distance_label = pygame_gui.elements.UILabel(
-            pygame.Rect((x, y_start + spacing - 22), (width, 20)),
-            "Distância entre fendas (um)",
-            manager=self.manager
-        )
-
-        # slit width slider
-        self.slit_width_slider = pygame_gui.elements.UIHorizontalSlider(
-            pygame.Rect((x, y_start + 2 * spacing), (width, height)),
-            start_value = m_to_um(state.slit_width_m),
-            value_range = (1.0, 50.0),
-            object_id = "#slider",
-            manager = self.manager
-        )
-
-        self.slit_width_label = pygame_gui.elements.UILabel(
-            pygame.Rect((x, y_start + 2*spacing - 22), (width, 20)),
-            "Largura da fenda (um)",
-            manager=self.manager
-        )
-
-        # screen distance slider
-        self.screen_distance_slider = pygame_gui.elements.UIHorizontalSlider(
-            pygame.Rect((x, y_start + 3 * spacing), (width, height)),
-            start_value = state.screen_distance_m,
-            value_range = (0.5, 5.0),
-            object_id = "#slider",
-            manager = self.manager
-        )
-
-        self.screen_distance_label = pygame_gui.elements.UILabel(
-            pygame.Rect((x, y_start + 3*spacing - 22), (width, 20)),
-            "Distância da tela (m)",
-            manager=self.manager
-        )
-
-        # screen range slider
-        self.screen_range_slider = pygame_gui.elements.UIHorizontalSlider(
-            pygame.Rect((x, y_start + 4 * spacing), (width, height)),
-            start_value = state.screen_range_m * 200.0,
-            value_range = (1.0, 100.0),
-            object_id = "#slider",
-            manager = self.manager
-        )
-
-        self.screen_range_label = pygame_gui.elements.UILabel(
-            pygame.Rect((x, y_start + 4*spacing - 22), (width, 20)),
-            "Campo de visão (cm)",
-            manager=self.manager
-        )
-
+        self.components[name] = {
+            "slider": slider,
+            "input": input_field,
+            "to_state": to_state,
+            "from_state": from_state,
+        }
 
     
     def process_events(self, event):
         self.manager.process_events(event)
 
+        if event.type == pygame_gui.UI_HORIZONTAL_SLIDER_MOVED:
+            for name, param in self.components.items():
+                if event.ui_element == param["slider"]:
+                    value = event.value
+                    param["input"].set_text(f"{value:.2f}")
+
+                    setattr(
+                        self.state,
+                        f"{name}_m",
+                        param["to_state"](value),
+                    )
+
+        if event.type == pygame_gui.UI_TEXT_ENTRY_FINISHED:
+            for name, param in self.components.items():
+                if event.ui_element == param["input"]:
+                    try:
+                        value = float(param["input"].get_text())
+
+                        min_val, max_val = param["slider"].value_range
+                        value = max(min_val, min(max_val, value))
+
+                        param["slider"].set_current_value(value)
+
+                        setattr(
+                            self.state,
+                            f"{name}_m",
+                            param["to_state"](value),
+                        )
+
+                    except ValueError:
+                        pass
+    
 
     def update(self, time):
         self.manager.update(time)
-
-        # update wavelength
-        self.state.wavelength_m = nm_to_m(
-            self.wavelength_slider.get_current_value()
-        )
-
-        self.wavelength_label.set_text(
-            f"Comprimento de onda (nm): {self.wavelength_slider.get_current_value():.1f}"
-        )
-
-        # update slit distance
-        self.state.slit_distance_m = um_to_m(
-            self.slit_distance_slider.get_current_value()
-        )
-
-        self.slit_distance_label.set_text(
-            f"Distância entre fendas (um): {self.slit_distance_slider.get_current_value():.1f}"
-        )
-
-        # update slit width
-        self.state.slit_width_m = um_to_m(
-            self.slit_width_slider.get_current_value()
-        )
-
-        self.slit_width_label.set_text(
-            f"Largura da fenda (um): {self.slit_width_slider.get_current_value():.1f}"
-        )
-
-        # update screen distance
-        self.state.screen_distance_m = (
-            self.screen_distance_slider.get_current_value()
-        )
-
-        self.screen_distance_label.set_text(
-            f"Distância da tela (m): {self.screen_distance_slider.get_current_value():.2f}"
-        )
-
-        # update screen range (zoom)
-        self.state.screen_range_m = (
-            self.screen_range_slider.get_current_value() / 200.0
-            # (self.screen_range_slider.get_current_value() * 100.0) / 200.0
-        )
-
-        self.screen_range_label.set_text(
-            f"Campo de visão (cm): {self.screen_range_slider.get_current_value():.1f}"
-        )
 
 
     def draw(self, screen):

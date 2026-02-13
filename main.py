@@ -1,7 +1,7 @@
 from src.core.app import App
 
 # TO DO
-# - Adicionar caixas de input
+# - Alterar construção do gráfico (pixel a pixel causa serrilhamento)
 # - Desenhar o anteparo das fendas
 # - Marcar os máximos
 # - Calcular e mostrar a distância entre os máximos
