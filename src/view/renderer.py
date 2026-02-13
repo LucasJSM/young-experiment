@@ -32,10 +32,18 @@ class Renderer:
     def draw_interference(self, state):
         color = wavelength_to_rgb(m_to_nm(state.wavelength_m))
 
-        for px in range(self.width):
-            x_m = pixel_to_meter(px, self.width, state.screen_range_m)
-            intensity = YoungEngine.calculate_intensity(x_m, state)
+        # Convert pixel positions to physical positions
+        x_array = (self.x_pixels / self.width - 0.5) * 2.0 * state.screen_range_m
 
-            y = int(self.center_y - intensity * self.plot_height)
+        # Calculate intensities at each position
+        intensities = YoungEngine.calculate_intensity(x_array, state)
 
-            pygame.draw.circle(self.screen, color, (px, y), 1)
+        # Map y positions in screen
+        y_values = self.center_y - (intensities * self.plot_height)
+
+        # Create points for drawing
+        points = np.column_stack((self.x_pixels, y_values))
+
+        # Draw lines between points
+        if len(points) > 1:
+            pygame.draw.aalines(self.screen, color, False, points, blend = 1)

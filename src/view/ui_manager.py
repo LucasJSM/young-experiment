@@ -10,13 +10,15 @@ class UIManager:
         # dictionary to hold references to UI components
         self.components = {}
 
+        # UI layout params
         x_start = 50
         y_start = 520
         spacing = 50
         width = 320
-        input_width = 80
         height = 25
+        input_width = 80
 
+        # to_state/from_state functions convert between UI values and state values
         self.build_components(
             name = "wavelength",
             label_text = "Comprimento de Onda λ (nm)",
