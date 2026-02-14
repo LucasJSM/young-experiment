@@ -113,27 +113,21 @@ class UIManager:
     def process_events(self, event):
         self.manager.process_events(event)
 
+        # Handle slider changes
         if event.type == pygame_gui.UI_HORIZONTAL_SLIDER_MOVED:
-            for name, param in self.components.items():
+            for param in self.components.values():
                 if event.ui_element == param["slider"]:
                     value = event.value
                     param["input"].set_text(f"{value:.2f}")
 
-                    setattr(
-                        self.state,
-                        f"{name}_m",
-                        param["to_state"](value),
-                    )
-
+        # Handle text input changes
         if event.type == pygame_gui.UI_TEXT_ENTRY_FINISHED:
-            for name, param in self.components.items():
+            for param in self.components.values():
                 if event.ui_element == param["input"]:
                     try:
                         value = float(param["input"].get_text())
-
                         min_val, max_val = param["slider"].value_range
                         value = max(min_val, min(max_val, value))
-
                         param["slider"].set_current_value(value)
 
                         setattr(
@@ -148,6 +142,15 @@ class UIManager:
 
     def update(self, time):
         self.manager.update(time)
+
+        for name, param in self.components.items():
+            ui_value = param["slider"].get_current_value()
+
+            setattr(
+                self.state,
+                f"{name}_m",
+                param["to_state"](ui_value),
+            )
 
 
     def draw(self, screen):
