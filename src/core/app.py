@@ -45,7 +45,7 @@ class App:
             self.ui_manager.update(time)
 
             self.screen.fill((20, 20, 20))
-            self.renderer.draw_axes()
+            self.renderer.draw_container()
             self.renderer.draw_interference(self.state)
             self.ui_manager.draw(self.screen)
 
