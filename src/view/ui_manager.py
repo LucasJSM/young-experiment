@@ -130,12 +130,6 @@ class UIManager:
                         value = max(min_val, min(max_val, value))
                         param["slider"].set_current_value(value)
 
-                        setattr(
-                            self.state,
-                            f"{name}_m",
-                            param["to_state"](value),
-                        )
-
                     except ValueError:
                         pass
     
