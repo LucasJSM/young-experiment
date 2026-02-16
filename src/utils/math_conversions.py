@@ -53,7 +53,7 @@ def pixel_to_meter(
     Screen center (screen_width_px / 2)
     """
     num = (pixel / screen_width_px) - 0.5
-    return num * 2.0 * screen_range_m
+    return num * screen_range_m
 
 def meter_to_pixel(
     x_m: float,
@@ -63,5 +63,5 @@ def meter_to_pixel(
     """
     Convert physical position (meters) to pixel position
     """
-    num = (x_m / (2.0 * screen_range_m)) + 0.5
+    num = (x_m / screen_range_m) + 0.5
     return int(num * screen_width_px)
