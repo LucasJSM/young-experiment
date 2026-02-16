@@ -68,7 +68,7 @@ class UIManager:
             label_text = "Campo de visão (cm)",
             x = x_start,
             y = y_start + 4 * spacing,
-            slider_range = (2.0, 20.0),
+            slider_range = (2.0, 100.0),
             start_value = m_to_cm(state.screen_range_m),
             to_state = cm_to_m,
             from_state = m_to_cm,

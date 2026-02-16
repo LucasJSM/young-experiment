@@ -65,7 +65,7 @@ class Renderer:
         color = wavelength_to_rgb(m_to_nm(state.wavelength_m))
 
         # Convert pixel positions to physical positions
-        x_array = (self.x_pixels / self.plot_width - 0.5) * 2.0 * state.screen_range_m
+        x_array = (self.x_pixels / self.plot_width - 0.5) * state.screen_range_m
 
         # Calculate intensities at each position
         intensities = YoungEngine.calculate_intensity(x_array, state)
