@@ -35,11 +35,11 @@ class Renderer:
         # dimensions of the container
         container_rect = (self.margin_x, self.plot_top, self.plot_width, self.plot_height)
 
-        # draw container
-        pygame.draw.rect(self.screen, (30, 30, 35), container_rect, 0)
+        # container
+        pygame.draw.rect(self.screen, (30, 30, 35), container_rect, 0, border_radius = 5)
 
-        # draw container border
-        pygame.draw.rect(self.screen, (100, 100, 100), container_rect, 2)
+        # container border
+        pygame.draw.rect(self.screen, (100, 100, 100), container_rect, 2, border_radius = 5)
 
         # main axis
         center_x = self.margin_x + (self.plot_width // 2)
@@ -84,6 +84,7 @@ class Renderer:
         
         self.draw_screen(intensities, color)
         self.draw_markers(state)
+        self.draw_fringe_spacing_panel(state)
 
     
     def draw_screen(self, intensities, color):
@@ -111,12 +112,12 @@ class Renderer:
         # render the surface on the screen
         self.screen.blit(self.strip_surface, (self.margin_x, screen_y))
 
-        # draw border
+        # border
         pygame.draw.rect(
             self.screen, 
             (100, 100, 100), 
             (self.margin_x, screen_y, self.plot_width, self.screen_height), 
-            2
+            2,
         )
     
 
@@ -174,3 +175,40 @@ class Renderer:
         label_unidade = font.render("Posição (mm)", True, (150, 150, 150))
         label_rect = label_unidade.get_rect(topright=(self.margin_x + self.plot_width, self.plot_bottom + 25))
         self.screen.blit(label_unidade, label_rect)
+
+
+    # draw maxima interference results
+    def draw_fringe_spacing_panel(self, state):
+        delta_y_mm = m_to_mm(YoungEngine.calculate_fringe_spacing(state))
+
+        panel_width = 325
+        panel_height = 110
+        
+        panel_x = self.margin_x + self.plot_width - panel_width
+        panel_y = 520 
+        
+        panel_rect = pygame.Rect(panel_x, panel_y, panel_width, panel_height)
+        pygame.draw.rect(self.screen, (30, 30, 35), panel_rect, border_radius = 5)
+        pygame.draw.rect(self.screen, (100, 100, 100), panel_rect, 2, border_radius = 5)
+
+        font_title = pygame.font.SysFont('segoeui', 16)
+        font_text = pygame.font.SysFont('segoeui', 14)
+        font_value = pygame.font.SysFont('segoeui', 14)
+
+        # title
+        title = font_title.render("RESULTADOS", True, (255, 255, 255))
+        self.screen.blit(title, (panel_x + 15, panel_y + 15))
+
+        # label
+        label = font_text.render("Distância entre Máximos:", True, (255, 255, 255))
+        self.screen.blit(label, (panel_x + 15, panel_y + 45))
+
+        # result
+        value_str = f"{delta_y_mm:.3f}".replace('.', ',') + " mm"
+        value = font_value.render(value_str, True, (100, 255, 100))
+        self.screen.blit(value, (panel_x + 200, panel_y + 43))
+
+        # information
+        info_str = f"{state.screen_distance_m:.2f}".replace('.', ',')
+        info = font_text.render(f"(Cálculo para L = {info_str} m)", True, (150, 150, 150))
+        self.screen.blit(info, (panel_x + 15, panel_y + 75))
