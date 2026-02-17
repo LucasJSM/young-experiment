@@ -7,15 +7,16 @@ class YoungEngine:
         pos_x: float | np.ndarray, 
         state: ExperimentState) -> float | np.ndarray:
         """
-        Calculate the light intensity at position x on the screen for Young's Double-Slit Experiment (Fraunhofer)
+            Calculate the intensity of light on the screen.
 
-        Args: pos_x (float or numpy array): position on the screen (m)
-        state (ExperimentState): current state of the experiment
+            Parameters:
+            - pos_x: Position(s) on the screen (in meters) where intensity is calculated
+            - state: An instance of ExperimentState containing the parameters of the experiment
 
-        Returns: light intensity (float or numpy array)
+            Returns:
+            - Intensity of light at the given position(s) on the screen
         """ 
 
-        # Parameters from state
         lambda_ = state.wavelength_m
         d = state.slit_distance_m
         a = state.slit_width_m
@@ -33,3 +34,27 @@ class YoungEngine:
         intensity = diffraction * interference
 
         return intensity
+    
+
+    @staticmethod
+    def calculate_fringe_spacing(state: ExperimentState) -> float:
+        """
+            Calculate the distance between adjacent maxima on the screen.
+
+            Parameters:
+            - state: An instance of ExperimentState containing the parameters of the experiment
+
+            Returns:
+            - Distance between adjacent maxima on the screen (in meters)
+        """
+
+        lambda_ = state.wavelength_m
+        d = state.slit_distance_m
+        L = state.screen_distance_m
+
+        if d == 0:
+            return 0.0
+        
+        delta_y = (lambda_ * L) / d
+        
+        return delta_y
