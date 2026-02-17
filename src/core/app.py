@@ -17,7 +17,7 @@ class App:
         self.clock = pygame.time.Clock()
         self.running = True
 
-        self.font = pygame.font.SysFont("segoeui", 16)
+        self.font = pygame.font.Font('assets/fonts/Roboto-Regular.ttf', 16)
 
         # Initial experiment state
         self.state = ExperimentState(

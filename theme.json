@@ -1,4 +1,22 @@
 {
+  "defaults": {
+    "font": {
+      "name": "roboto",
+      "size": "14"
+    }
+  },
+  "label": {
+    "font": {
+      "name": "roboto",
+      "size": "14"
+    }
+  },
+  "text_entry_line": {
+    "font": {
+      "name": "roboto",
+      "size": "14"
+    }
+  },
   "#slider": {
     "misc": {
       "shape": "rounded_rectangle",

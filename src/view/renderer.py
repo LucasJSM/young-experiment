@@ -139,7 +139,7 @@ class Renderer:
         if density < 5: i = 10
         if density < 2: i = 20
 
-        font = pygame.font.SysFont('segoeui', 14)
+        font = pygame.font.Font('assets/fonts/Roboto-Regular.ttf', 14)
 
         for m in range(-300, 301, i):
             # m is the fringe order, pos_m is the physical position
@@ -191,9 +191,9 @@ class Renderer:
         pygame.draw.rect(self.screen, (30, 30, 35), panel_rect, border_radius = 5)
         pygame.draw.rect(self.screen, (100, 100, 100), panel_rect, 2, border_radius = 5)
 
-        font_title = pygame.font.SysFont('segoeui', 16)
-        font_text = pygame.font.SysFont('segoeui', 14)
-        font_value = pygame.font.SysFont('segoeui', 14)
+        font_title = pygame.font.Font('assets/fonts/Roboto-Regular.ttf', 16)
+        font_text = pygame.font.Font('assets/fonts/Roboto-Regular.ttf', 14)
+        font_value = pygame.font.Font('assets/fonts/Roboto-Regular.ttf', 14)
 
         # title
         title = font_title.render("RESULTADOS", True, (255, 255, 255))

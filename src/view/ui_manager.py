@@ -5,7 +5,10 @@ from src.utils.math_conversions import *
 class UIManager:
     def __init__(self, screen_size, state):
         self.state = state
-        self.manager = pygame_gui.UIManager(screen_size, theme_path="theme.json")
+        
+        self.manager = pygame_gui.UIManager(screen_size)
+
+        self.setup_theme()
 
         # dictionary to hold references to UI components
         self.components = {}
@@ -70,6 +73,14 @@ class UIManager:
             to_state = cm_to_m,
             from_state = m_to_cm,
         )
+
+
+    def setup_theme(self):
+        """ Configure the UI theme and fonts. """
+        font_path = "assets/fonts/Roboto-Regular.ttf"
+        self.manager.add_font_paths("roboto", font_path, font_path, font_path, font_path)
+        self.manager.preload_fonts([{'name': 'roboto', 'point_size': 14, 'style': 'regular'}])
+        self.manager.get_theme().load_theme("theme.json")
 
 
     def build_components(self, name, label_text, x, y, slider_range, start_value, to_state, from_state):
