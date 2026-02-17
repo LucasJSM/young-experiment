@@ -138,7 +138,7 @@ class Renderer:
         if density < 5: i = 10
         if density < 2: i = 20
 
-        font = pygame.font.SysFont('Arial', 14)
+        font = pygame.font.SysFont('segoeui', 14)
 
         for m in range(-300, 301, i):
             # m is the fringe order, pos_m is the physical position
