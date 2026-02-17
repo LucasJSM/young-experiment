@@ -14,10 +14,7 @@ class UIManager:
         x_start = 50
         y_start = 520
         spacing = 50
-        width = 320
-        height = 25
-        input_width = 80
-
+        
         # to_state/from_state functions convert between UI values and state values
         self.build_components(
             name = "wavelength",
@@ -76,19 +73,21 @@ class UIManager:
 
 
     def build_components(self, name, label_text, x, y, slider_range, start_value, to_state, from_state):
+        width = 320
         slider_width = 250
-        label_width = 320
+        input_width = 80
+        height = 25
 
-        label_x = x - (label_width - slider_width) // 2
+        label_x = x - (width - slider_width) // 2
 
         label = pygame_gui.elements.UILabel(
-            relative_rect = pygame.Rect((label_x, y - 20), (label_width, 20)),
+            relative_rect = pygame.Rect((label_x, y - 20), (width, height)),
             text = label_text,
             manager = self.manager,
         )
         
         slider = pygame_gui.elements.UIHorizontalSlider(
-            relative_rect = pygame.Rect((x, y), (250, 25)),
+            relative_rect = pygame.Rect((x, y), (slider_width, height)),
             start_value = start_value,
             value_range = slider_range,
             manager = self.manager,
@@ -96,7 +95,7 @@ class UIManager:
         )
 
         input_field = pygame_gui.elements.UITextEntryLine(
-            relative_rect = pygame.Rect((x + 270, y), (80, 25)),
+            relative_rect = pygame.Rect((x + 270, y), (input_width, height)),
             manager = self.manager,
         )
 

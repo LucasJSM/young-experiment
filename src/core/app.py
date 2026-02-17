@@ -17,7 +17,7 @@ class App:
         self.clock = pygame.time.Clock()
         self.running = True
 
-        self.font = pygame.font.SysFont("Arial", 18)
+        self.font = pygame.font.SysFont("segoeui", 16)
 
         # Initial experiment state
         self.state = ExperimentState(
