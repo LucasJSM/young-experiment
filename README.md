@@ -4,23 +4,44 @@
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Python](https://img.shields.io/badge/python-3.10+-blue.svg)
-![Pygame](https://img.shields.io/badge/library-pygame-green.svg)
+![Pygame](https://img.shields.io/badge/library-pygame--ce-green.svg)
+![Pygame GUI](https://img.shields.io/badge/library-pygame--gui-orange.svg)
+![NumPy](https://img.shields.io/badge/math-NumPy-lightblue.svg)
 
 </div>
 
-Uma simulação física interativa e visualmente precisa do **Experimento da Fenda Dupla de Young**, desenvolvida em Python. O projeto utiliza NumPy para renderizar padrões de interferência e difração de luz em tempo real, permitindo que estudantes e entusiastas explorem os princípios da óptica ondulatória.
+Uma simulação física interativa e visualmente precisa do **Experimento da Fenda Dupla de Thomas Young**, desenvolvida em Python. 
 
+O projeto utiliza processamento vetorial com NumPy para renderizar padrões de difração e interferência da luz em tempo real, , permitindo que estudantes e entusiastas explorem os princípios da óptica ondulatória.
+
+--- 
+
+## 📸 O Projeto em Ação
+
+<div align="center">
+   
+  <img src="https://github.com/user-attachments/assets/218168ef-de0d-403f-bd58-ea12e244d631" alt="Padrão Azul" width="920"/>
+
+  <br>
+
+  <br>
+  
+  <img src="https://github.com/user-attachments/assets/59b03368-d5db-4d7e-86ee-882f9431c70c" alt="Padrão Amarelo" width="920"/>
+  
+</div>
+
+---
 
 ## ✨ Funcionalidades
 
 * **Simulação Física:** Combina Difração de Fraunhofer (Fenda Única) com Interferência de Young (Fenda Dupla).
-* **Renderização em Tempo Real:** Visualização instantânea do gráfico de intensidade.
-* **Controles Interativos:** Ajuste dinâmico de todos os parâmetros físicos via Sliders:
-    * **Comprimento de Onda ($\lambda$):** 380nm a 780nm (com cor RGB fiel).
+* **Renderização em Tempo Real:** Visualização instantânea do gráfico de intensidade com marcadores visuais que indicam as posições.
+* **Controles Interativos:** Ajuste dinâmico de todos os parâmetros físicos via Sliders e Inputs:
+    * **Comprimento de Onda ($\lambda$):** 380nm a 780nm (com conversão para cores RGB).
     * **Distância entre Fendas ($d$):** Ajuste em micrômetros ($\mu m$).
     * **Largura da Fenda ($a$):** Controle do envelope de difração.
     * **Distância do Anteparo ($L$):** Afaste ou aproxime a tela de projeção.
-* **Zoom Dinâmico:** Altere o campo de visão para analisar detalhes centrais ou o padrão expandido.
+* **Zoom Dinâmico:** Ajuste da área total observada na tela em centímetros, permitindo análises macro ou micro do fenômeno.
 
 ## 🚀 Instalação e Execução
 
@@ -60,8 +81,8 @@ Uma simulação física interativa e visualmente precisa do **Experimento da Fen
 
 * **[Python 3](https://www.python.org/):** Linguagem base.
 * **[Pygame CE](https://pyga.me/):** Motor gráfico para renderização da janela e primitivas visuais.
+* **[Pygame GUI](https://pygame-gui.readthedocs.io/):** Gerenciamento de interface (sliders e inputs).
 * **[NumPy](https://numpy.org/):** Cálculos vetoriais de alta performance para processar a intensidade de luz em milhares de pixels simultaneamente.
-* **[Pygame GUI](https://pygame-gui.readthedocs.io/):** Gerenciamento de interface (sliders).
 
 ## 📂 Estrutura do Projeto
 
@@ -69,23 +90,30 @@ O projeto segue o padrão arquitetural **MVC (Model-View-Controller)** para sepa
 
 ```text
 young-experiment/
-├── main.py
-└── src/
-    ├── core/
-    │   └── app.py          # Gerenciador do Game Loop (Controller)
-    ├── model/
-    │   ├── experiment_state.py  # Dataclass com parâmetros físicos
-    │   └── young_engine.py      # Motor matemático
-    ├── view/
-    │   ├── renderer.py     # Desenha o gráfico e o padrão de luz
-    │   ├── ui_manager.py   # Gerencia Sliders e Inputs
-    │   └── colors.py       # Conversão do Comprimento de Onda -> RGB
-    └── utils/
-        └── math_conversions.py # Conversões de unidades
+├── assets/
+│   └── fonts/              # Tipografia customizada (ex: Roboto)
+├── src/
+│   ├── core/
+│   │   └── app.py          # Gerenciador do Game Loop (Controller)
+│   ├── model/
+│   │   ├── experiment_state.py  # Estado global e parâmetros físicos
+│   │   └── young_engine.py      # Motor matemático
+│   ├── view/
+│   │   ├── renderer.py     # Desenho do gráfico, anteparo e HUD
+│   │   ├── ui_manager.py   # Gerenciador de Sliders e Inputs (Pygame GUI)
+│   │   └── colors.py       # Conversor Espectral (Lambda -> RGB)
+│   └── utils/
+│       └── math_conversions.py  # Conversores de escalas e unidades
+├── theme.json              # Configuração visual da interface
+└── main.py
 ```
 
 ## 🧠 Física do Projeto
-A intensidade $I$ em um ponto $x$ da tela é calculada combinando dois fenômenos:
+A intensidade $I$ da luz em um ponto $x$ do anteparo é calculada pela combinação de dois fenômenos ondulatórios.
+
+A distância teórica entre dois máximos principais consecutivos é dada por:
+
+$$\Delta y = \frac{\lambda L}{d}$$
 
 ### Interferência (Fenda Dupla):
 
