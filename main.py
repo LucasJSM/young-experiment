@@ -1,9 +1,8 @@
 from src.core.app import App
 
 # TO DO
-# - Desenhar o anteparo das fendas
-# - Marcar os máximos
-# - Calcular e mostrar a distância entre os máximos
+# - Melhorar a UI
+# - Refatorar o nome das funções e variáveis
 
 if __name__ == "__main__":
   App().run()

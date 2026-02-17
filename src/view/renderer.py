@@ -177,7 +177,6 @@ class Renderer:
         self.screen.blit(label_unidade, label_rect)
 
 
-    # draw maxima interference results
     def draw_fringe_spacing_panel(self, state):
         delta_y_mm = m_to_mm(YoungEngine.calculate_fringe_spacing(state))
 

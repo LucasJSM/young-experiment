@@ -139,9 +139,12 @@ class UIManager:
                         min_val, max_val = param["slider"].value_range
                         value = max(min_val, min(max_val, value))
                         param["slider"].set_current_value(value)
-
+                        param["input"].set_text(f"{value:.2f}")
+                        
                     except ValueError:
-                        pass
+                        # if input is not a valid float, reset to current slider value
+                        current_value = param["slider"].get_current_value()
+                        param["input"].set_text(f"{current_value:.2f}")
     
 
     def update(self, time):
